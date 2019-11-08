@@ -84,6 +84,8 @@ hlp = '''
  TIP: for online databases, changes are registered only locally until
  you save the database using the 'save' command.
  
+ PS: 'edit' does not work yet!
+ 
 '''
 print(intro)
 print(hlp)
