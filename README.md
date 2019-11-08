@@ -1,16 +1,8 @@
 # python_database_tool
-  _____        _        ____            _                  
- |  __ \      | |      |  _ \          (_)                 
- | |  | | __ _| |_ __ _| |_) | __ _ ___ _  ___             
- | |  | |/ _` | __/ _` |  _ < / _` / __| |/ __|            
- | |__| | (_| | || (_| | |_) | (_| \__ \ | (__ _           
- |_____/ \__,_|\__\__,_|____/ \__,_|___/_|\___( )__      __
- | |               /\      | (_) |            |/ \ \    / /
- | |__  _   _     /  \   __| |_| |_ _   _  __ _   \ \  / / 
- | '_ \| | | |   / /\ \ / _` | | __| | | |/ _` |   \ \/ /  
- | |_) | |_| |  / ____ \ (_| | | |_| |_| | (_| |    \  /   
- |_.__/ \__, | /_/    \_\__,_|_|\__|\__, |\__,_|     \(_)  
-         __/ |                       __/ |                 
-        |___/                       |___/
-        
- Simple FTP database management tool
+
+  ## DATABASIC
+     Simple FTP database management tool, written in python.
+     To use your own FTP server, change the values of
+         ftp = ftplib.FTP(server)
+         ftp.login(username, password)
+      with your own values.
