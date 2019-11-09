@@ -8,6 +8,22 @@ def Convert(string):
     li = list(string.split(",")) 
     return li
 
+def display(dn):
+    dbstr = ""
+    lndb = 0
+    for l in dbase:
+        line = ""
+        for j in l:
+            line += " " + j + "\t"
+        line = line.rstrip("\t")
+        if len(line) > lndb:
+                lndb = len(line)
+        dbstr += line + "\n"
+    dbstr = dbstr.rstrip("\n")
+    print(" " + dn + "\n", ("=" * (lndb+3)))
+    print(dbstr)
+    print("","=" * (lndb+3))
+
 def download(file):
     file += ".txt"
     ftp = ftplib.FTP("ftpupload.net")
@@ -24,6 +40,9 @@ def download(file):
         dbnom = file.replace(".txt","")
         os.remove(file)
         print("loaded database '" + dbnom + "' successfully.")
+        print()
+        display(file.replace(".txt",""))
+        print()
     except:
         print("failed to load database.")    
     ftp.quit()
@@ -66,7 +85,7 @@ hlp = '''
  new    (name)               create new database
  add    (id,data,...)        add record using input CSVs
  show                        show database
- remove (id)                 delete record with specified id")
+ rem    (id)                 delete record with specified id")
  ren    (name)               rename the database
  edit   (id,index,new_value) modify value of specified index (0-n)
                              in the row with specified id to given
@@ -74,6 +93,7 @@ hlp = '''
  delete (name)               Delete a pre existing database from server
                              or from local path (loc is path)
  save                        uploads current database
+ h                           displays help
  
  
  TIP: you can simply put the command and params in the same line.
@@ -83,8 +103,9 @@ hlp = '''
 
  TIP: for online databases, changes are registered only locally until
  you save the database using the 'save' command.
- 
- PS: 'edit' does not work yet!
+
+ PS: 'edit' function does not work yet. To edit, you have to delete
+ the old record and then add a new record with the new values.
  
 '''
 print(intro)
@@ -115,24 +136,12 @@ while True:
             b = str(input("Enter CSVs (id,data,...)> "))
         else:
             b = inp[4:len(inp)]
-        num = [0]
-        for i in range(0,len(b)):
-            if b[i] == ",":
-                num.append(i)
-        num.append(len(b))
-        nl = []
-        for j in range(0, len(num)-1):
-            itm = (b[num[j]:num[j + 1]]).lstrip(",")
-            nl.append(itm)
-        dbase.append(nl)
-        print("added entry ",nl," to database")
+        dta = []
+        dta = Convert(b)
+        dbase.append(dta)
+        print("added entry ",dta," to database")
     elif inp == "show":
-        print(" " , dbnom + "\n", ("=" * (len(dbnom)+2)))
-        cols = 0
-        for l in dbase:
-            for j in l:
-                print(j, end="\t")
-            print("\n")
+        display(dbnom)
     elif inp == "save":
         print("saving database...")
         file1 = open(dbnom + ".txt","w")
@@ -145,7 +154,7 @@ while True:
         file1.writelines(txt)
         file1.close()
         upload(dbnom + ".txt")
-    elif "remove" in inp:
+    elif "rem" in inp:
         if inp == "delete":
             inc = str(input("enter record id> "))
         else:
@@ -164,11 +173,3 @@ while True:
             delete(dbnom + ".txt")
     elif inp == "h":
         print(hlp)
-
-        
-        
-                    
-                
-        
-
-        
