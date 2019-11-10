@@ -53,7 +53,8 @@ def upload(file):
     ftp.cwd("/htdocs/")
     ftp.storbinary("STOR " + file, open(file, "rb"), 1024)
     ftp.quit()
-    print("done.")
+    os.remove(file)
+    print("saved database successfully.")
 
 def delete(file):
     ftp = ftplib.FTP("ftpupload.net")
@@ -61,6 +62,7 @@ def delete(file):
     ftp.cwd("/htdocs/")
     ftp.delete(file)
     ftp.quit()
+    os.remove(file)
     
 intro = '''
   _____        _        ____            _                  
@@ -81,20 +83,22 @@ hlp = '''
  DATABASE HELP
  ----------------------------------------------------------------
  NAME   PARAMS               FUNCTION
- open   (name)               open a pre existing database from server
- new    (name)               create new database
- add    (id,data,...)        add record using input CSVs
- show                        show database
- rem    (id)                 delete record with specified id")
- ren    (name)               rename the database
- edit   (id,index,new_value) modify value of specified index (0-n)
+ open   (name)               opens a pre existing database from server
+ new    (name)               creates new database
+ add    (id,data,...)        adds record using input CSVs
+ show                        shows database
+ raw                         prints raw data
+ rem    (id)                 deletes record with specified id
+ ren    (name)               renames the database
+ edit   (id,old,new)         modifies value of specified index (0-n)
                              in the row with specified id to given
                              new value.
- delete (name)               Delete a pre existing database from server
-                             or from local path (loc is path)
+ swap   (id1,id2)            swaps position of records of specified ids
+ delete (name)               deletes a pre existing database from server
+                             or local file (if unsaved)
  save                        uploads current database
+ disp   (id)                 displays record with given id
  h                           displays help
- 
  
  TIP: you can simply put the command and params in the same line.
  for example, typing 'add abc,100' will add 'abc' , '100' to a
@@ -102,15 +106,11 @@ hlp = '''
  separately as well.
 
  TIP: for online databases, changes are registered only locally until
- you save the database using the 'save' command.
-
- PS: 'edit' function does not work yet. To edit, you have to delete
- the old record and then add a new record with the new values.
- 
+ you save the database using the 'save' command. 
 '''
 print(intro)
 print(hlp)
-print("Starting New Session \n")
+print("starting session...")
 while True:
     inp = str(input("command (h for help)> "))
     if "open" in inp:
@@ -171,5 +171,13 @@ while True:
     elif "delete" in inp:
         if inp == "delete":
             delete(dbnom + ".txt")
+    elif inp == "raw":
+        print(dbase)
+    elif "swap" in inp:
+        if inp != swap:
+            inp = inp[5:len(inp)]
+        else:
+            inp = str(input("enter ids (id1,i2)> "))
+            swapit = Convert(inp)
     elif inp == "h":
         print(hlp)
