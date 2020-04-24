@@ -1,7 +1,6 @@
 import ftplib
 import os
 import time
-
 dbase = []
 dbnom = ""
 usnm,pasw = "usnm", "pass"
