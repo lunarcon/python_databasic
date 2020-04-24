@@ -4,7 +4,7 @@ import time
 
 dbase = []
 dbnom = ""
-usnm,pasw = "epiz_24763533", "Yg91ovaLLqOkeg"
+usnm,pasw = "usnm", "pass"
 def Convert(string): 
     li = list(string.split(",")) 
     return li
