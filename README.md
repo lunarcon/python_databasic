@@ -1,4 +1,5 @@
 # databasic
+NOTE: THIS HAS BEEN DEPRACATED. SEE NEPTUNE
 
      Simple FTP database management tool, written in python.
      To use your own FTP server, change the values of
